@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple AR Test</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.0/aframe/build/aframe-ar.js"></script>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        .arjs-loader {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .arjs-loader div {
+            text-align: center;
+            font-size: 1.25em;
+            margin-top: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="arjs-loader">
+        <div>Loading AR, please wait...</div>
+    </div>
+    
+    <a-scene embedded arjs='sourceWidth: 1280; sourceHeight: 720; displayWidth: 100%; displayHeight: 100%;' renderer='antialias: true; alpha: true'>
+        <!-- Preload assets with CORS proxy -->
+        <a-assets>
+            <a-asset-item id="taj-mahal" src="https://cors-anywhere.herokuapp.com/https://ctrl-alt-bharat.vercel.app/assets/models/taj_mahal/scene.gltf"></a-asset-item>
+        </a-assets>
+        
+        <!-- Main marker with Taj Mahal model -->
+        <a-marker preset="hiro">
+            <!-- Taj Mahal 3D Model -->
+            <a-entity gltf-model="#taj-mahal"
+                     scale="0.5 0.5 0.5"
+                     position="0 0.5 0">
+            </a-entity>
+            
+            <!-- Text label -->
+            <a-text value="TAJ MAHAL" 
+                   color="white" 
+                   align="center" 
+                   position="0 1.5 0" 
+                   scale="1.5 1.5 1.5"
+                   width="4">
+            </a-text>
+        </a-marker>
+        
+        <!-- Camera with adjusted FOV -->
+        <a-entity camera="fov: 80"></a-entity>
+        
+        <!-- Improved lighting -->
+        <a-entity light="type: ambient; color: #888; intensity: 1.0"></a-entity>
+        <a-entity light="type: directional; color: #fff; intensity: 1.5" position="-1 1 0.5"></a-entity>
+        <a-entity light="type: hemisphere; color: #fff; groundColor: #444; intensity: 1.0"></a-entity>
+        
+        <!-- Add a ground plane for better shadows -->
+        <a-entity position="0 0 0">
+            <a-plane position="0 -0.5 0" rotation="-90 0 0" width="10" height="10" color="#333" opacity="0.5" shadow></a-plane>
+        </a-entity>
+    </a-scene>
+    
+    <script>
+        // Hide loader when AR is ready
+        document.querySelector('a-scene').addEventListener('loaded', function() {
+            document.querySelector('.arjs-loader').style.display = 'none';
+        });
+    </script>
+</body>
+</html>

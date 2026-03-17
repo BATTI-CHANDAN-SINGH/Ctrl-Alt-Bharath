@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ctrl+Alt+Bharat - Experience Indian Heritage in AR</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* Additional page-specific styles can go here */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Button Styles */
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            text-align: center;
+            white-space: nowrap;
+            flex: 1;
+        }
+
+        .ar-btn {
+            background-color: #4a6fa5;
+            color: white;
+        }
+
+        .download-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .btn i {
+            margin-right: 6px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 480px) {
+            .button-group {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .btn {
+                width: 100%;
+                padding: 0.6rem;
+            }
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        /* AI Chat Section Styles */
+        .ai-section {
+            padding: 6rem 0;
+            background-color: #f8f9fa;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            color: #555;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .ai-chat-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* Suggested Questions */
+        .suggested-questions {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .suggested-questions p {
+            color: #555;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .question-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .suggested-question {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        
+        .suggested-question:hover {
+            background-color: #f0f4f8;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Chat Interface */
+        .ai-chat-interface {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .ai-chat-header {
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, #4a6fa5, #3a5a80);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .ai-chat-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .ai-minimize-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0 0.5rem;
+            line-height: 1;
+        }
+        
+        .ai-chat-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .ai-message {
+            max-width: 80%;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            line-height: 1.5;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .user-message {
+            align-self: flex-end;
+            background-color: #4a6fa5;
+            color: white;
+            border-bottom-right-radius: 4px;
+            margin-left: auto;
+        }
+        
+        .assistant-message {
+            align-self: flex-start;
+            background-color: #f0f4f8;
+            color: #2c3e50;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .ai-typing-indicator {
+            background-color: #f0f4f8 !important;
+            width: fit-content;
+        }
+        
+        .typing-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #6c757d;
+            margin: 0 2px;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+        
+        .ai-chat-input {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid #e0e0e0;
+            background-color: #f8f9fa;
+        }
+        
+        .ai-user-input {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 24px;
+            padding: 0.75rem 1.25rem;
+            font-size: 1rem;
+            resize: none;
+            max-height: 120px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        
+        .ai-user-input:focus {
+            outline: none;
+            border-color: #4a6fa5;
+            box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
+        }
+        
+        .ai-send-btn {
+            background-color: #4a6fa5;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            margin-left: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        
+        .ai-send-btn:hover {
+            background-color: #3a5a80;
+            transform: translateY(-2px);
+        }
+        
+        .ai-send-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Toggle Chat Button (Mobile) */
+        .ai-toggle-chat {
+            display: none;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #4a6fa5, #3a5a80);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 100;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .ai-toggle-chat:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+        
+        .ai-toggle-chat i {
+            font-size: 1.2rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .ai-chat-interface {
+                position: fixed;
+                bottom: 5.5rem;
+                right: 1.5rem;
+                width: calc(100% - 3rem);
+                height: 70vh;
+                max-height: 600px;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(20px);
+                transition: all 0.3s ease;
+                z-index: 99;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            }
+            
+            .ai-chat-interface.active {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+            
+            .ai-toggle-chat {
+                display: flex;
+            }
+            
+            .suggested-questions {
+                margin-bottom: 1rem;
+            }
+            
+            .question-chips {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .suggested-question {
+                white-space: nowrap;
+                font-size: 0.85rem;
+                padding: 0.5rem 1rem;
+            }
+            
+            .ai-message {
+                max-width: 90%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .ai-section {
+                padding: 4rem 0;
+            }
+            
+            .section-subtitle {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+            
+            .ai-chat-interface {
+                right: 1rem;
+                width: calc(100% - 2rem);
+            }
+            
+            .ai-toggle-chat {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+            
+            .ai-toggle-chat span {
+                display: none;
+            }
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* About Section */
+        .about {
+            padding: 6rem 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: var(--secondary);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        /* Team Section */
+        .team {
+            padding: 6rem 0;
+            background-color: var(--light);
+        }
+        
+        .team-members {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .team-member {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            width: 250px;
+            text-align: center;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+        
+        .member-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .member-info {
+            padding: 1.5rem;
+        }
+        
+        .member-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .member-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* AR Section */
+        .ar-section {
+            padding: 6rem 0;
+            text-align: center;
+            background: white;
+        }
+        
+        .ar-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .ar-content p {
+            margin-bottom: 2rem;
+            color: #555;
+            line-height: 1.8;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .social-links {
+            margin: 1.5rem 0;
+        }
+        
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .footer-bottom {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+        }
+        
+        /* Responsive */
+        /* Mobile Menu Styles */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-links li a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links li a:hover,
+        .nav-links li a.active {
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .menu-toggle {
+                display: block;
+                z-index: 1001;
+            }
+            
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: white;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+                padding: 2rem;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 1rem 0;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-monument"></i> Ctrl+Alt+Bharat
+            </a>
+            <button class="menu-toggle" aria-label="Toggle navigation" style="display: none;">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#home" class="active"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#about"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="#team"><i class="fas fa-users"></i> Our Team</a></li>
+                <li><a href="mailto:test@gmail.com?subject=Feedback%20for%20Ctrl%2BAlt%2BBharat&body=%0A%0A---%0ASent%20from%20Ctrl%2BAlt%2BBharat%20website" id="featureRequestBtn"><i class="fas fa-comment-alt"></i> Feedback</a></li>
+                <li><a href="taj-placeholder-ar.html" class="btn btn-primary">
+                    <i class="fas fa-vr-cardboard"></i> Try AR Experience
+                </a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Dynamic Background -->
+    <section class="hero" id="home" style="background-size: cover; background-position: center; background-repeat: no-repeat; color: white;">
+        <div class="container">
+            <h1>Experience Indian Heritage in AR</h1>
+            <p>Discover the rich cultural heritage of India through immersive augmented reality experiences.</p>
+            <a href="#heritage" class="btn btn-primary">Explore Now</a>
+        </div>
+    </section>
+    
+    <script>
+    // Array of high-quality Indian cultural heritage images from Unsplash
+    const heritageImages = [
+        'https://plus.unsplash.com/premium_photo-1661919589683-f11880119fb7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1496372412473-e8548ffd82bc?q=80&w=2214&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1515091943-9d5c0ad475af?q=80&w=1035&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1514222134-b57cbb8ce073?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1561359313-0639aad49ca6?q=80&w=1035&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1486548730767-5c679e8eda6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1461603950871-cd64bcf7acf0?q=80&w=2166&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://plus.unsplash.com/premium_photo-1661963646501-7c2818380948?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+    ];
+    
+    // Function to change background image with fade effect
+    function changeBackground() {
+        const hero = document.querySelector('.hero');
+        let currentIndex = 0;
+        
+        // Set initial background
+        hero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${heritageImages[0]}')`;
+        
+        // Change image every 5 seconds
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % heritageImages.length;
+            
+            // Fade out
+            hero.style.opacity = '0.5';
+            
+            // Change image after fade out
+            setTimeout(() => {
+                hero.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${heritageImages[currentIndex]}')`;
+                // Fade in
+                hero.style.opacity = '1';
+            }, 500);
+            
+        }, 5000);
+    }
+    
+    // Start the slideshow when the page loads
+    window.addEventListener('load', changeBackground);
+    </script>
+
+    <!-- Features Section -->
+    <section id="features" class="section">
+        <div class="container">
+            <h2 class="section-title">Why Choose Our Platform</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile First</h3>
+                    <p>Experience AR directly from your smartphone's browser with no app installation required.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <h3>Rich Heritage</h3>
+                    <p>Explore detailed 3D models of India's most iconic heritage sites and monuments.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Educational</h3>
+                    <p>Learn about history, architecture, and cultural significance through interactive content.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">About Our Project</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Revolutionizing Heritage Exploration</h3>
+                    <p>Our project brings India's rich cultural heritage to life through the power of Augmented Reality. We've created an immersive experience that allows users to interact with 3D models of historical monuments right from their smartphones or computers.</p>
+                    <p>Developed for the Smart India Hackathon, our solution aims to make learning about India's heritage more engaging and accessible to people of all ages.</p>
+                    <a href="#" class="btn">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section" id="team">
+        <div class="container">
+            <h2 class="section-title">Our Team</h2>
+            <div class="team-intro">
+                <p>We are a passionate team of developers and designers dedicated to bringing Indian heritage to life through augmented reality technology.</p>
+            </div>
+            
+            <div class="team-members">
+                <div class="team-member">
+                    <img src="https://ui-avatars.com/api/?name=Batti+Chandan+Singh&background=3498db&color=fff&size=200" alt="Batti Chandan Singh" class="member-img">
+                    <div class="member-info">
+                        <h3 class="member-name">Batti Chandan Singh</h3>
+                        <p class="member-role">Team Member</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="https://ui-avatars.com/api/?name=Mohammed+Sabir&background=3498db&color=fff&size=200" alt="Mohammed Sabir" class="member-img">
+                    <div class="member-info">
+                        <h3 class="member-name">Mohammed Sabir</h3>
+                        <p class="member-role">Team Member</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="https://ui-avatars.com/api/?name=Donepalli+Pranitha&background=3498db&color=fff&size=200" alt="Donepalli Pranitha" class="member-img">
+                    <div class="member-info">
+                        <h3 class="member-name">Donepalli Pranitha</h3>
+                        <p class="member-role">Team Member</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="https://ui-avatars.com/api/?name=Thota+Sai+Teja&background=3498db&color=fff&size=200" alt="Thota Sai Teja" class="member-img">
+                    <div class="member-info">
+                        <h3 class="member-name">Thota Sai Teja</h3>
+                        <p class="member-role">Team Member</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="https://ui-avatars.com/api/?name=Safa+Mahveen&background=3498db&color=fff&size=200" alt="Safa Mahveen" class="member-img">
+                    <div class="member-info">
+                        <h3 class="member-name">Safa Mahveen</h3>
+                        <p class="member-role">Team Member</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="https://ui-avatars.com/api/?name=Gandra+Bala+Aditya+Reddy&background=3498db&color=fff&size=200" alt="Gandra Bala Aditya Reddy" class="member-img">
+                    <div class="member-info">
+                        <h3 class="member-name">Gandra Bala Aditya Reddy</h3>
+                        <p class="member-role">Team Member</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AR Experiences Section -->
+    <section class="ar-experiences" style="padding: 6rem 0; background-color: #f9f9f9;">
+        <div class="container">
+            <h2 class="section-title">Experience in AR</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; color: #555; line-height: 1.6;">
+                Explore these amazing Indian heritage sites and festivals in Augmented Reality. Click on any experience to view in AR.
+            </p>
+            <div class="features" style="margin-top: 2rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; padding: 1rem;">
+                <div class="feature-card" style="text-align: center; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 1.5rem;">
+                    <img src="https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=2352&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Taj Mahal" style="width: 100%; height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+                    <h3 style="margin: 0 0 1rem 0; color: #2c3e50;">Taj Mahal</h3>
+                    <p style="margin-bottom: 1.5rem; color: #555; min-height: 60px;">Experience the beauty of the iconic white marble mausoleum in Agra, India.</p>
+                    <div class="button-group" style="display: flex; gap: 8px; margin-top: 1rem; justify-content: center;">
+                        <a href="taj-mahal-ar.html" class="btn ar-btn" title="View in AR">
+                            <i class="fas fa-vr-cardboard"></i>
+                        </a>
+                        <a href="model-viewer.html?id=taj-mahal" class="btn embed-btn" title="View 3D Model">
+                            <i class="fas fa-cube"></i>
+                        </a>
+                        <a href="models/taj-mahal/taj_mahal_3d_model.glb" download class="btn download-btn" title="Download Model">
+                            <i class="fas fa-file-download"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="feature-card" style="text-align: center; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 1.5rem;">
+                    <img src="https://plus.unsplash.com/premium_photo-1697729588485-6c238cf3ab2f?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Ellora Caves" style="width: 100%; height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+                    <h3 style="margin: 0 0 1rem 0; color: #2c3e50;">Ellora Caves</h3>
+                    <p style="margin-bottom: 1.5rem; color: #555; min-height: 60px;">Explore the magnificent rock-cut cave temples and monasteries in Maharashtra.</p>
+                    <div class="button-group" style="display: flex; gap: 8px; margin-top: 1rem; justify-content: center;">
+                        <a href="ellora-ar.html" class="btn ar-btn" title="View in AR">
+                            <i class="fas fa-vr-cardboard"></i>
+                        </a>
+                        <a href="model-viewer.html?id=ellora" class="btn embed-btn" title="View 3D Model">
+                            <i class="fas fa-cube"></i>
+                        </a>
+                        <a href="models/ellora/ellora_caves__india.glb" download class="btn download-btn" title="Download Model">
+                            <i class="fas fa-file-download"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="feature-card" style="text-align: center; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 1.5rem;">
+                    <img src="https://images.unsplash.com/photo-1693590614566-1d3ea9ef32f7?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Kaaba in Mecca" style="width: 100%; height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+                    <h3 style="margin: 0 0 1rem 0; color: #2c3e50;">Kaaba in Mecca</h3>
+                    <p style="margin-bottom: 1.5rem; color: #555; min-height: 60px;">Experience the spiritual center of Islam, the most sacred site in the Muslim world.</p>
+                    <div class="button-group" style="display: flex; gap: 8px; margin-top: 1rem; justify-content: center;">
+                        <a href="kaaba-ar.html" class="btn ar-btn" title="View in AR">
+                            <i class="fas fa-vr-cardboard"></i>
+                        </a>
+                        <a href="model-viewer.html?id=kaaba" class="btn embed-btn" title="View 3D Model">
+                            <i class="fas fa-cube"></i>
+                        </a>
+                        <a href="models/kaaba/kaaba_in_mecca.glb" download class="btn download-btn" title="Download Model">
+                            <i class="fas fa-file-download"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="feature-card" style="text-align: center; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 1.5rem;">
+                    <img src="https://images.unsplash.com/photo-1522448746354-da4936934201?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Christmas Tree" style="width: 100%; height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+                    <h3 style="margin: 0 0 1rem 0; color: #2c3e50;">Christmas Tree</h3>
+                    <p style="margin-bottom: 1.5rem; color: #555; min-height: 60px;">Celebrate the holiday season with this beautiful 3D Christmas tree model.</p>
+                    <div class="button-group" style="display: flex; gap: 8px; margin-top: 1rem; justify-content: center;">
+                        <a href="christmas-ar.html" class="btn ar-btn" title="View in AR">
+                            <i class="fas fa-vr-cardboard"></i>
+                        </a>
+                        <a href="model-viewer.html?id=christmas" class="btn embed-btn" title="View 3D Model">
+                            <i class="fas fa-cube"></i>
+                        </a>
+                        <a href="models/christmas/christmas_tree_set.glb" download class="btn download-btn" title="Download Model">
+                            <i class="fas fa-file-download"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="feature-card" style="text-align: center; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 1.5rem;">
+                    <img src="https://images.unsplash.com/photo-1585744944048-846da0c3054c?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sanchi Stupa" style="width: 100%; height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+                    <h3 style="margin: 0 0 1rem 0; color: #2c3e50;">Sanchi Stupa</h3>
+                    <p style="margin-bottom: 1.5rem; color: #555; min-height: 60px;">Discover the ancient Buddhist monument located in Madhya Pradesh.</p>
+                    <div class="button-group" style="display: flex; gap: 8px; margin-top: 1rem; justify-content: center;">
+                        <a href="sanchi-ar.html" class="btn ar-btn" title="View in AR">
+                            <i class="fas fa-vr-cardboard"></i>
+                        </a>
+                        <a href="model-viewer.html?id=sanchi" class="btn embed-btn" title="View 3D Model">
+                            <i class="fas fa-cube"></i>
+                        </a>
+                        <a href="models/sanchi/great_stupa_in_sanchi.glb" download class="btn download-btn" title="Download Model">
+                            <i class="fas fa-file-download"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="feature-card" style="text-align: center; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 1.5rem;">
+                    <img src="https://images.unsplash.com/photo-1672839641769-b7a8afa0cb14?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sankranti Cow" style="width: 100%; height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;">
+                    <h3 style="margin: 0 0 1rem 0; color: #2c3e50;">Sankranti Cow</h3>
+                    <p style="margin-bottom: 1.5rem; color: #555; min-height: 60px;">Experience the traditional South Indian festival cow decoration in AR.</p>
+                    <div class="button-group" style="display: flex; gap: 8px; margin-top: 1rem; justify-content: center;">
+                        <a href="sankranti-ar.html" class="btn ar-btn" title="View in AR">
+                            <i class="fas fa-vr-cardboard"></i>
+                        </a>
+                        <a href="model-viewer.html?id=sankranti" class="btn embed-btn" title="View 3D Model">
+                            <i class="fas fa-cube"></i>
+                        </a>
+                        <a href="models/sankranti/sankranti_cow.glb" download class="btn download-btn" title="Download Model">
+                            <i class="fas fa-file-download"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Chat Section -->
+    <section class="ai-section" id="ai-chat">
+        <div class="container">
+            <h2 class="section-title">Ask Our AI Guide</h2>
+            <p class="section-subtitle">Get answers to your questions about Indian heritage sites and culture</p>
+            
+            <div class="ai-chat-container">
+                <!-- Suggested Questions -->
+                <div class="suggested-questions">
+                    <p>Try asking:</p>
+                    <div class="question-chips">
+                        <button class="suggested-question">Tell me about the history of Taj Mahal</button>
+                        <button class="suggested-question">What are the main features of Ellora Caves?</button>
+                        <button class="suggested-question">What is the significance of the Kaaba in Islam?</button>
+                    </div>
+                </div>
+                
+                <!-- Chat Interface -->
+                <div class="ai-chat-interface">
+                    <div class="ai-chat-header">
+                        <h3>Heritage Guide AI</h3>
+                        <button class="ai-minimize-btn">−</button>
+                    </div>
+                    <div class="ai-chat-messages">
+                        <div class="ai-message assistant-message">
+                            <div class="ai-message-content">
+                                Namaste! I'm your AI guide to Indian heritage. Ask me anything about historical sites, cultural significance, or travel tips!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ai-chat-input">
+                        <textarea class="ai-user-input" placeholder="Type your question here..." rows="1"></textarea>
+                        <button class="ai-send-btn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Toggle Chat Button (for mobile) -->
+                <button class="ai-toggle-chat">
+                    <i class="fas fa-comment-dots"></i>
+                    <span>Chat with AI</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 Ctrl+Alt+Bharat. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Loading Indicator (initially hidden) -->
+    <div id="loading" style="display: none;">
+        <div class="spinner"></div>
+        <p>Loading AR Experience...</p>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (menuToggle && navLinks) {
+                // Toggle menu when clicking the menu button
+                const toggleMenu = (e) => {
+                    if (e) e.stopPropagation();
+                    const isExpanded = navLinks.classList.toggle('active');
+                    menuToggle.setAttribute('aria-expanded', isExpanded);
+                    const icon = menuToggle.querySelector('i');
+                    if (icon) {
+                        icon.className = isExpanded ? 'fas fa-times' : 'fas fa-bars';
+                    }
+                    document.body.style.overflow = isExpanded ? 'hidden' : '';
+                };
+                
+                // Close menu function
+                const closeMenu = () => {
+                    navLinks.classList.remove('active');
+                    menuToggle.setAttribute('aria-expanded', 'false');
+                    const icon = menuToggle.querySelector('i');
+                    if (icon) {
+                        icon.className = 'fas fa-bars';
+                    }
+                    document.body.style.overflow = '';
+                };
+                
+                // Toggle menu on menu button click
+                menuToggle.addEventListener('click', toggleMenu);
+                
+                // Close menu when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (navLinks.classList.contains('active') && 
+                        !e.target.closest('.nav-links') && 
+                        !e.target.closest('.menu-toggle')) {
+                        closeMenu();
+                    }
+                });
+                
+                // Close menu when clicking on a nav link
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.addEventListener('click', closeMenu);
+                });
+                
+                // Close menu on window resize if it becomes desktop view
+                let resizeTimer;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimer);
+                    resizeTimer = setTimeout(() => {
+                        if (window.innerWidth > 768) {
+                            closeMenu();
+                        }
+                    }, 250);
+                });
+            }
+            
+            // Smooth scrolling for anchor links with offset for fixed header
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        const headerOffset = 80; // Height of your header
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Update active nav link on scroll with better detection
+            function updateActiveNavLink() {
+                const sections = document.querySelectorAll('section[id]');
+                const scrollPosition = window.scrollY + 100; // Add offset for better detection
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        const navLink = document.querySelector(`.nav-links a[href*="${sectionId}"]`);
+                        if (navLink) navLink.classList.add('active');
+                    } else {
+                        const navLink = document.querySelector(`.nav-links a[href*="${sectionId}"]`);
+                        if (navLink) navLink.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Throttle scroll events for better performance
+            let isScrolling;
+            window.addEventListener('scroll', () => {
+                window.clearTimeout(isScrolling);
+                isScrolling = setTimeout(updateActiveNavLink, 50);
+            });
+            
+            // Initial call
+            updateActiveNavLink();
+        }); // End of DOMContentLoaded
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/ai-chat.js"></script>
+</body>
+    
+    <style>
+        /* Style for the action buttons */
+        .btn {
+            min-width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            padding: 0 12px;
+        }
+        
+        .ar-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+        
+        .ar-btn:hover {
+            background-color: #3e8e41;
+            transform: translateY(-2px);
+        }
+        
+        .embed-btn {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+        }
+        
+        .embed-btn:hover {
+            background-color: #0b7dda;
+            transform: translateY(-2px);
+        }
+        
+        .download-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+        }
+        
+        .download-btn:hover {
+            background-color: #d32f2f;
+            transform: translateY(-2px);
+        }
+    </style>
+</body>
+</html>

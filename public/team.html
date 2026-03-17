@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team - Ctrl+Alt+Bharat</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            padding-top: 80px; /* Account for fixed header */
+        }
+        
+        /* Header Styles */
+        header {
+            background: #2c3e50;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav.container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+        
+        .logo {
+            color: white;
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #3498db;
+        }
+        
+        /* Team Section */
+        .team-section {
+            padding: 80px 0;
+            background: #f8f9fa;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin: 0 auto 20px;
+            color: #2c3e50;
+            width: 100%;
+        }
+        
+        .team-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            color: #555;
+            line-height: 1.6;
+            width: 100%;
+        }
+        
+        .team-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0;
+            justify-content: center;
+        }
+        
+        .team-member {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            margin: 0;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        
+        .member-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .member-info {
+            padding: 25px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .member-name {
+            font-size: 1.4rem;
+            margin: 0 0 8px;
+            color: #2c3e50;
+            line-height: 1.3;
+        }
+        
+        .member-role {
+            color: #3498db;
+            font-weight: 500;
+            margin: 0 0 15px;
+            display: block;
+            font-size: 1rem;
+        }
+        
+        .member-bio {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0 0 20px;
+            flex: 1;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: auto;
+            padding-top: 15px;
+        }
+        
+        .social-links a {
+            color: #666;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f2f5;
+        }
+        
+        .social-links a:hover {
+            color: white;
+            background: #3498db;
+            transform: translateY(-2px);
+        }
+        
+        .back-to-home {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 60px auto 0;
+            padding: 12px 28px;
+            background: #3498db;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid #3498db;
+            font-size: 1rem;
+            max-width: 200px;
+        }
+        
+        .back-to-home:hover {
+            background: transparent;
+            color: #3498db !important;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            color: var(--primary);
+        }
+        
+        .back-to-home i {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-monument"></i> Ctrl+Alt+Bharat
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="index.html#about"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="#" class="active"><i class="fas fa-users"></i> Our Team</a></li>
+                <li><a href="taj-placeholder-ar.html" class="btn btn-primary">
+                    <i class="fas fa-vr-cardboard"></i> Try AR Experience
+                </a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="team-section">
+        <div class="container">
+            <h2 class="section-title">Our Team</h2>
+            <div class="team-intro">
+                <p>We are a passionate team of developers and designers dedicated to bringing Indian heritage to life through augmented reality technology.</p>
+            </div>
+            
+            <div class="team-members">
+                <div class="team-member">
+                    <img src="https://ui-avatars.com/api/?name=Batti+Chandan+Singh&background=3498db&color=fff&size=200" alt="Batti Chandan Singh">
+                    <h3>Batti Chandan Singh</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="https://ui-avatars.com/api/?name=Mohammed+Sabir&background=3498db&color=fff&size=200" alt="Mohammed Sabir">
+                    <h3>Mohammed Sabir</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="https://ui-avatars.com/api/?name=Donepalli+Pranitha&background=3498db&color=fff&size=200" alt="Donepalli Pranitha">
+                    <h3>Donepalli Pranitha</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="https://ui-avatars.com/api/?name=Thota+Sai+Teja&background=3498db&color=fff&size=200" alt="Thota Sai Teja">
+                    <h3>Thota Sai Teja</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="https://ui-avatars.com/api/?name=Safa+Mahveen&background=3498db&color=fff&size=200" alt="Safa Mahveen">
+                    <h3>Safa Mahveen</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <img src="https://ui-avatars.com/api/?name=Gandra+Bala+Aditya+Reddy&background=3498db&color=fff&size=200" alt="Gandra Bala Aditya Reddy">
+                    <h3>Gandra Bala Aditya Reddy</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="back-to-home">
+                <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Ctrl+Alt+Bharat. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/your-code.js" crossorigin="anonymous"></script>
+</body>
+</html>
